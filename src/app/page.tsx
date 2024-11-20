@@ -8,6 +8,7 @@ export default function Home() {
         <H1>アルゴリズム</H1>
         <section className="flex flex-col gap-4 items-center">
           <BinarySearch />
+          <LinkedList />
         </section>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
