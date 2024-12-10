@@ -1,27 +1,27 @@
-'use client'
-import { useBinarySearch } from '@/hooks/useBinarySearch'
-import { useState } from 'react'
-import { H2 } from '@/components/atoms/Headings'
+'use client';
+import { useBinarySearch } from '@/hooks/useBinarySearch';
+import { useState } from 'react';
+import { H2 } from '@/components/atoms/Headings';
 
-import { Section1, Section2, Section3 } from '@/components/atoms/Sections'
-import { NumberInput, Label } from '@/components/atoms/Forms'
+import { Section1, Section2, Section3 } from '@/components/atoms/Sections';
+import { NumberInput, Label } from '@/components/atoms/Forms';
 
 export const BinarySearch = () => {
-  const [length, setLength] = useState<number>(100000000)
-  const [target, setTarget] = useState<number>(999)
+  const [length, setLength] = useState<number>(100000000);
+  const [target, setTarget] = useState<number>(999);
   const { search, searchCount, process, linerSearchCount, compare, isError } =
     useBinarySearch({
       length,
       target,
-    })
+    });
   const handleLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLength(parseInt(e.target.value, 10))
-    search()
-  }
+    setLength(parseInt(e.target.value, 10));
+    search();
+  };
   const handleTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTarget(parseInt(e.target.value, 10))
-    search()
-  }
+    setTarget(parseInt(e.target.value, 10));
+    search();
+  };
 
   return (
     <Section1>
@@ -65,7 +65,7 @@ export const BinarySearch = () => {
                 <div className="timeline-end">{i + 1}</div>
                 {i !== process.length - 1 && <hr />}
               </li>
-            )
+            );
           })}
         </ul>
         <p className="text-center">二分探索: {searchCount}回</p>
@@ -74,5 +74,5 @@ export const BinarySearch = () => {
         </p>
       </Section2>
     </Section1>
-  )
-}
+  );
+};

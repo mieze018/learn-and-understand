@@ -1,48 +1,28 @@
-export const TextInput = ({
-  className,
-  isError,
-  ...props
-}: {
-  isError?: boolean;
-} & React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->) => {
-  const classes = ['input', 'max-w-xs', isError && 'input-error', className];
-  return <input type="text" className={classes.join(' ')} {...props} />;
-};
+'use client';
+import styled from 'styled-components';
 
-export const NumberInput = ({
-  className,
-  isError,
-  ...props
-}: {
-  isError?: boolean;
-} & React.DetailedHTMLProps<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  HTMLInputElement
->) => {
-  const classes = ['input', 'max-w-xs', isError && 'input-error', className];
-  return <input type="number" className={classes.join(' ')} {...props} />;
-};
+export const TextInput = styled.input.attrs<{ isError?: boolean }>((props) => ({
+  type: 'text',
+  className: `input max-w-xs ${props.isError ? 'input-error' : ''}`,
+  isError: undefined,
+}))``;
+
+export const NumberInput = styled(TextInput).attrs({ type: 'number' })``;
+
+const LabelWrapper = styled.label.attrs({ className: 'label' })``;
+const LabelSpan = styled.span.attrs({ className: 'label-text' })``;
 
 export const Label = ({
   children,
-  className,
   ...props
 }: Readonly<
   {
     children: React.ReactNode;
-    className?: string;
-  } & React.DetailedHTMLProps<
-    React.LabelHTMLAttributes<HTMLLabelElement>,
-    HTMLLabelElement
-  >
+  } & React.LabelHTMLAttributes<HTMLLabelElement>
 >) => {
-  const classes = ['label', className];
   return (
-    <label className={classes.join(' ')} {...props}>
-      <span className="label-text">{children}</span>
-    </label>
+    <LabelWrapper {...props}>
+      <LabelSpan>{children}</LabelSpan>
+    </LabelWrapper>
   );
 };
