@@ -7,7 +7,10 @@ export const H1 = styled.h1.attrs<{ className?: string }>({
   className: `${commonClasses} text-3xl`,
 })``;
 
-export const H2 = styled(H1).attrs({
+export const H2 = styled.h2.attrs({
   className: `${commonClasses} text-2xl`,
-  as: 'h2',
+})``;
+
+export const H3 = styled.h3.attrs({
+  className: `${commonClasses} text-xl`,
 })``;
