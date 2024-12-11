@@ -1,7 +1,7 @@
 'use client';
 import { useBinarySearch } from '@/hooks/useBinarySearch';
 import { useState } from 'react';
-import { H2 } from '@/components/atoms/Headings';
+import { H2, H3 } from '@/components/atoms/Headings';
 
 import { Section1, Section2, Section3 } from '@/components/atoms/Sections';
 import { NumberInput, Label } from '@/components/atoms/Forms';
@@ -52,7 +52,7 @@ export const BinarySearch = () => {
           </div>
           <div></div>
         </Section3>
-        <h3>検索結果</h3>
+        <H3>検索結果</H3>
         <ul className="timeline max-w-max overflow-auto">
           {process.map((p, i) => {
             return (
