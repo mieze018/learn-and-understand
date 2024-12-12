@@ -1,5 +1,16 @@
+import { useState } from 'react';
 /**コイントスで表が出る回数と確率 */
-export const useCoinToss = ({ tossCount }: { tossCount: number }) => {
+export const useCoinToss = () => {
+  const [tossCount, setTossCount] = useState(1);
+  const tossCountSelection = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const percentColorClasses = (percent: number) => {
+    if (percent >= 90) return 'text-blue-500';
+    if (percent >= 75) return 'text-cyan-500';
+    if (percent >= 50) return 'text-green-500';
+    if (percent >= 25) return 'text-yellow-500';
+    if (percent >= 10) return 'text-orange-500';
+    return 'text-red-500';
+  };
   /** toSSCountまでの書く回数の配列 */
   const eachCount = Array.from({ length: tossCount + 1 });
   /** 数値をパーセントに変換 */
@@ -35,6 +46,16 @@ export const useCoinToss = ({ tossCount }: { tossCount: number }) => {
         .reduce((acc, cur) => acc + cur.probability, 0) / 100;
     return { count, probability: toPercent(probability) };
   });
+  /** パターン数 */
+  const patternCount = 2 ** tossCount;
 
-  return { probabilities, probabilitiesGreater };
+  return {
+    probabilities,
+    probabilitiesGreater,
+    tossCountSelection,
+    tossCount,
+    setTossCount,
+    percentColorClasses,
+    patternCount,
+  };
 };
