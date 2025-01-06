@@ -9,8 +9,8 @@ export const TextInput = styled.input.attrs<{ isError?: boolean }>((props) => ({
 
 export const NumberInput = styled(TextInput).attrs({ type: 'number' })``;
 
-const LabelWrapper = styled.label.attrs({ className: 'label' })``;
-const LabelSpan = styled.span.attrs({ className: 'label-text' })``;
+export const LabelWrapper = styled.label.attrs({ className: 'label' })``;
+export const LabelSpan = styled.span.attrs({ className: 'label-text' })``;
 
 export const Label = ({
   children,
@@ -26,3 +26,10 @@ export const Label = ({
     </LabelWrapper>
   );
 };
+
+export const Button = styled.button.attrs({ className: 'btn' })``;
+
+export const Checkbox = styled.input.attrs({
+  type: 'checkbox',
+  className: 'checkbox',
+})``;

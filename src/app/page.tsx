@@ -1,5 +1,6 @@
 import { BinarySearch } from '@/components/objects/BinarySearch';
 import { CoinToss } from '@/components/objects/CoinToss';
+import { RunLengthEncoding } from '@/components/objects/RunLengthEncoding';
 import { H1 } from '@/components/atoms/Headings';
 export default function Home() {
   return (
@@ -9,6 +10,7 @@ export default function Home() {
         <section className="flex flex-col gap-4 items-center">
           <BinarySearch />
           <CoinToss />
+          <RunLengthEncoding />
         </section>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center"></footer>
