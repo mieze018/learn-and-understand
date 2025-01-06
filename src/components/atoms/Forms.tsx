@@ -33,3 +33,8 @@ export const Checkbox = styled.input.attrs({
   type: 'checkbox',
   className: 'checkbox',
 })``;
+
+export const Radio = styled.input.attrs({
+  type: 'radio',
+  className: 'radio',
+})``;

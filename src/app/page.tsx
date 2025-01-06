@@ -1,6 +1,7 @@
 import { BinarySearch } from '@/components/objects/BinarySearch';
 import { CoinToss } from '@/components/objects/CoinToss';
 import { RunLengthEncoding } from '@/components/objects/RunLengthEncoding';
+import { HashingMethod } from '@/components/objects/HashingMethod';
 import { H1 } from '@/components/atoms/Headings';
 export default function Home() {
   return (
@@ -11,6 +12,7 @@ export default function Home() {
           <BinarySearch />
           <CoinToss />
           <RunLengthEncoding />
+          <HashingMethod />
           <H1>確率計算</H1>
           <CoinToss />
         </section>
