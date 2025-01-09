@@ -2,6 +2,7 @@ import { BinarySearch } from '@/components/objects/BinarySearch';
 import { CoinToss } from '@/components/objects/CoinToss';
 import { RunLengthEncoding } from '@/components/objects/RunLengthEncoding';
 import { HashingMethod } from '@/components/objects/HashingMethod';
+import { NestedLinkedList } from '@/components/objects/NestedLinkedList';
 import { H1 } from '@/components/atoms/Headings';
 export default function Home() {
   return (
@@ -12,7 +13,10 @@ export default function Home() {
           <BinarySearch />
           <RunLengthEncoding />
           <HashingMethod />
-          <H1>確率計算</H1>
+          <NestedLinkedList />
+        </section>
+        <H1>確率計算</H1>
+        <section className="flex flex-col gap-4 items-center w-full">
           <CoinToss />
         </section>
       </main>
