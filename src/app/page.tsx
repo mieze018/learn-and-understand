@@ -6,7 +6,7 @@ import { H1 } from '@/components/atoms/Headings';
 export default function Home() {
   return (
     <>
-      <main className="lg:max-w-screen-lg md:max-w-screen-md flex flex-col gap-8 row-start-2 items-center sm:items-start">
+      <main className="lg:max-w-(--breakpoint-lg) md:max-w-(--breakpoint-md) flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <H1>アルゴリズム</H1>
         <section className="flex flex-col gap-4 items-center">
           <BinarySearch />
