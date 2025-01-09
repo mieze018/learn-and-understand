@@ -1,27 +1,23 @@
 'use client';
 import { useBinarySearch } from '@/hooks/useBinarySearch';
-import { useState } from 'react';
+
 import { H2, H3 } from '@/components/atoms/Headings';
 
 import { Section1, Section2, Section3 } from '@/components/atoms/Sections';
 import { NumberInput, Label } from '@/components/atoms/Forms';
 
 export const BinarySearch = () => {
-  const [length, setLength] = useState<number>(100000000);
-  const [target, setTarget] = useState<number>(999);
-  const { search, searchCount, process, linerSearchCount, compare, isError } =
-    useBinarySearch({
-      length,
-      target,
-    });
-  const handleLengthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLength(parseInt(e.target.value, 10));
-    search();
-  };
-  const handleTargetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTarget(parseInt(e.target.value, 10));
-    search();
-  };
+  const {
+    target,
+    length,
+    searchCount,
+    process,
+    linerSearchCount,
+    compare,
+    isError,
+    handleLengthChange,
+    handleTargetChange,
+  } = useBinarySearch();
 
   return (
     <Section1>
@@ -32,8 +28,8 @@ export const BinarySearch = () => {
             <Label htmlFor="length">どの数まで検索？</Label>
             <NumberInput
               isError={isError}
-              onChange={handleLengthChange}
-              value={length.toString()}
+              onChange={(e) => handleLengthChange(e.target.value)}
+              value={length}
               name="length"
               title="Length"
             />
@@ -44,8 +40,8 @@ export const BinarySearch = () => {
             </Label>
             <NumberInput
               isError={isError}
-              onChange={handleTargetChange}
-              value={target.toString()}
+              onChange={(e) => handleTargetChange(e.target.value)}
+              value={target}
               name="target"
               title="Target"
             />
