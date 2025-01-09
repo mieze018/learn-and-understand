@@ -37,24 +37,31 @@ export const RunLengthEncoding = () => {
           />
         </Section3>
         <Section3>
-          Option: <br />
-          <TextInput
-            placeholder="開始記号"
-            value={startSymbol}
-            onChange={(e) => setStartSymbol(e.target.value)}
-          />
-          <TextInput
-            placeholder="終了記号"
-            value={endSymbol}
-            onChange={(e) => setEndSymbol(e.target.value)}
-          />
+          <div className="w-full">Option:</div>
           <LabelWrapper>
-            <LabelSpan>カウントを16進数で表現する</LabelSpan>
-
+            <LabelSpan>開始記号</LabelSpan>
+            <TextInput
+              placeholder="開始記号"
+              value={startSymbol}
+              onChange={(e) => setStartSymbol(e.target.value)}
+              className="w-20"
+            />
+          </LabelWrapper>
+          <LabelWrapper>
+            <LabelSpan>終了記号</LabelSpan>
+            <TextInput
+              placeholder="終了記号"
+              value={endSymbol}
+              onChange={(e) => setEndSymbol(e.target.value)}
+              className="w-20"
+            />
+          </LabelWrapper>
+          <LabelWrapper>
             <Checkbox
               checked={isCountHex}
               onChange={() => setIsCountHex(!isCountHex)}
             />
+            <LabelSpan>カウントを16進数で表現する</LabelSpan>
           </LabelWrapper>
         </Section3>
         <Section3 className="break-all">元のテキスト: {text}</Section3>

@@ -25,7 +25,7 @@ export const CoinToss = () => {
     <Section1>
       <H2>コイントスで表が出る回数と確率</H2>
       <Section2>
-        <Section3>
+        <Section3 className="justify-center">
           <Label>
             <ul className="steps">
               {tossCountSelection.map((count) => {
@@ -41,8 +41,8 @@ export const CoinToss = () => {
           </Label>
         </Section3>
         <H3>表が出る回数と確率</H3>
+        <div>パターン数: {patternCount}</div>
         <div className="flex flex-row w-full overflow-auto gap-x-12 justify-center">
-          <div>パターン数: {patternCount}</div>
           <DlCol $columns={3}>
             {probabilities.map((p) => {
               return (

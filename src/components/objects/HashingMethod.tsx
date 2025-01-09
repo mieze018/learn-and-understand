@@ -39,6 +39,7 @@ export const HashingMethod = () => {
             value={maxHashNumber}
             onChange={(e) => setMaxHashNumber(Number(e.target.value))}
             name="maxHashNumber"
+            className="w-20"
           />
           <TextInput
             placeholder="カンマ区切りで数字を入力"
@@ -51,7 +52,7 @@ export const HashingMethod = () => {
         </Section3>
 
         <Section3>対象の数字: {valueArray.join(' | ')}</Section3>
-        <Section3>
+        <Section3 className="justify-around">
           {isError && 'エラー: 0以外の数字を入力してください'}
           <TableWrapper>
             <Table>
@@ -59,9 +60,21 @@ export const HashingMethod = () => {
                 {hashTable.map((h, i) => {
                   return (
                     <Tr key={i}>
-                      <Th>{i + 1}</Th>
-                      <Td>{h[0]}</Td>
-                      <Td>{h[1]}</Td>
+                      <Th
+                        className={
+                          hashTable.some((h) => h[1] === i + 1)
+                            ? 'text-blue-500'
+                            : ''
+                        }
+                      >
+                        {i + 1}
+                      </Th>
+                      <Td className={h[0] > 0 ? 'text-green-500' : ''}>
+                        {h[0]}
+                      </Td>
+                      <Td className={h[1] > 0 ? 'text-blue-500' : ''}>
+                        {h[1]}
+                      </Td>
                     </Tr>
                   );
                 })}

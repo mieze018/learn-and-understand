@@ -6,11 +6,10 @@ import { H1 } from '@/components/atoms/Headings';
 export default function Home() {
   return (
     <>
-      <main className="lg:max-w-(--breakpoint-lg) md:max-w-(--breakpoint-md) flex flex-col gap-8 row-start-2 items-center sm:items-start">
+      <main className="lg:w-max-(--breakpoint-lg) md:w-max-(--breakpoint-md) sm:w-max-(--breakpoint-sm) flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <H1>アルゴリズム</H1>
-        <section className="flex flex-col gap-4 items-center">
+        <section className="flex flex-col gap-4 items-center w-full">
           <BinarySearch />
-          <CoinToss />
           <RunLengthEncoding />
           <HashingMethod />
           <H1>確率計算</H1>
