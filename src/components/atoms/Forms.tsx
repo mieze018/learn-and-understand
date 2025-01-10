@@ -9,9 +9,12 @@ export const TextInput = styled.input.attrs<{ isError?: boolean }>((props) => ({
 
 export const NumberInput = styled(TextInput).attrs({ type: 'number' })``;
 
+/** ラベル内にテキストとinputを両方入れる場合のラッパー */
 export const LabelWrapper = styled.label.attrs({ className: 'label' })``;
+/** ラベル内にテキストとinputを両方入れる場合のテキストのラッパー */
 export const LabelSpan = styled.span.attrs({ className: 'label-text' })``;
 
+/** ラベル テキストのみ入れる場合に使用する。 */
 export const Label = ({
   children,
   ...props
