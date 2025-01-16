@@ -6,6 +6,15 @@ import { DlCol, Dd, Dt } from '@/components/atoms/DescriptionList';
 
 import { Section1, Section2, Section3 } from '@/components/atoms/Sections';
 import {
+  TableWrapper,
+  Table,
+  THead,
+  TBody,
+  Th,
+  Tr,
+  Td,
+} from '@/components/atoms/Table';
+import {
   Label,
   LabelSpan,
   LabelWrapper,
@@ -66,7 +75,7 @@ export const CoinToss = () => {
           })}
         </Section3>
         <H3>表が出る回数と確率</H3>
-        <div>パターン数: {patternCount}</div>
+        <div>パターン数: {patternCount.toLocaleString()}</div>
         <div className="flex flex-row w-full overflow-auto gap-x-12 justify-center">
           <DlCol $columns={3}>
             <Dt></Dt>
@@ -107,7 +116,7 @@ export const CoinToss = () => {
             <Dt></Dt>
             <Dd>{tossCount}回連続表の確率</Dd>
             <Dd></Dd>
-            <Dt>{probabilitiesConsecutive.count}回 </Dt>
+            <Dt></Dt>
             <Dd
               className={percentColorClasses(
                 probabilitiesConsecutive.probability,
@@ -116,9 +125,60 @@ export const CoinToss = () => {
               {probabilitiesConsecutive.probability}
             </Dd>
             <Dd>%</Dd>
+            <Dt></Dt>
+            <Dd>( 1 / {patternCount} )</Dd>
+            <Dd> </Dd>
           </DlCol>
+        </div>
+        <div>全てのパターンリスト</div>
+        {allPatternsTable(patternCount, tossCount)}
+
+        <div>
+          {tossCount} bit は {patternCount.toLocaleString()}通り
         </div>
       </Section2>
     </Section1>
+  );
+};
+
+const allPatternsTable = (patternCount: number, tossCount: number) => {
+  if (patternCount > 300) {
+    return (
+      <div className="text-warning">パターン数が多すぎるため表示できません</div>
+    );
+  }
+  return (
+    <TableWrapper className="overflow-auto max-w-[80vw]">
+      <Table>
+        <THead>
+          <Tr>
+            <Th></Th>
+            {Array.from({ length: tossCount }, (_, i) => {
+              return <Th key={i}>{i + 1}</Th>;
+            })}
+          </Tr>
+        </THead>
+        <TBody>
+          {Array.from({ length: patternCount }, (_, pc) => {
+            return (
+              <Tr key={pc}>
+                <Td>{pc + 1}</Td>
+                {Array.from({ length: tossCount }, (__, tc) => {
+                  const bit = (pc >> tc) & 1;
+                  return (
+                    <Td
+                      key={tc}
+                      className={bit ? 'text-primary' : 'text-secondary'}
+                    >
+                      {bit}
+                    </Td>
+                  );
+                })}
+              </Tr>
+            );
+          })}
+        </TBody>
+      </Table>
+    </TableWrapper>
   );
 };
