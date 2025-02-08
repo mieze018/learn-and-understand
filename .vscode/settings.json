@@ -35,5 +35,5 @@
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cSpell.words": ["daisyui"]
+  "cSpell.words": ["daisyui", "heapify"]
 }
