@@ -1,5 +1,5 @@
 'use client';
-import { useCoinToss } from '@/hooks/useCoinToss';
+import { useCoinToss, UseCoinTossType } from '@/hooks/useCoinToss';
 import { Fragment } from 'react';
 import { H2, H3 } from '@/components/atoms/Headings';
 import { DlCol, Dd, Dt } from '@/components/atoms/DescriptionList';
@@ -32,12 +32,12 @@ export const CoinToss = () => {
     patternCount,
     decimalPlaces,
     setDecimalPlaces,
+    isBinaryUnit,
+    setIsBinaryUnit,
+    stepVariant,
+    greaterDtText,
   } = useCoinToss();
 
-  const stepVariant = (count: number) =>
-    count === tossCount ? 'step-primary' : '';
-  const greaterDtText = (count: number) =>
-    count === 0 || count === tossCount ? '' : '以上';
   return (
     <Section1>
       <H2>コイントスで表が出る回数と確率</H2>
@@ -51,6 +51,7 @@ export const CoinToss = () => {
                     key={count}
                     className={`step cursor-pointer ${stepVariant(count)}`}
                     onClick={() => setTossCount(count)}
+                    data-content={count}
                   />
                 );
               })}
@@ -75,16 +76,80 @@ export const CoinToss = () => {
           })}
         </Section3>
         <H3>表が出る回数と確率</H3>
-        <div>パターン数: {patternCount.toLocaleString()}</div>
-        <div className="flex flex-row w-full overflow-auto gap-x-12 justify-center">
-          <DlCol $columns={3}>
-            <Dt></Dt>
-            <Dd>n回表の確率</Dd>
-            <Dd></Dd>
-            {probabilities.map((p) => {
+        {coinTossTable({
+          probabilities,
+          probabilitiesGreater,
+          probabilitiesConsecutive,
+          tossCount,
+          patternCount,
+          percentColorClasses,
+          greaterDtText,
+        })}
+        <div>全てのパターンリスト</div>
+        {allPatternsTable({ patternCount, tossCount })}
+
+        {displayBitUnits({ tossCount, isBinaryUnit, setIsBinaryUnit })}
+      </Section2>
+    </Section1>
+  );
+};
+
+const coinTossTable = ({
+  probabilities,
+  probabilitiesGreater,
+  probabilitiesConsecutive,
+  tossCount,
+  patternCount,
+  percentColorClasses,
+  greaterDtText,
+}: Pick<
+  UseCoinTossType,
+  | 'probabilities'
+  | 'probabilitiesGreater'
+  | 'probabilitiesConsecutive'
+  | 'tossCount'
+  | 'patternCount'
+  | 'percentColorClasses'
+  | 'greaterDtText'
+>) => {
+  if (tossCount > 20) {
+    return (
+      <div className="text-warning">
+        コイントス回数が多すぎるため表は表示されません
+      </div>
+    );
+  }
+  return (
+    <>
+      <div>パターン数: {patternCount.toLocaleString()}</div>
+      <div className="flex flex-row w-full overflow-auto gap-x-12 justify-center">
+        <DlCol $columns={3}>
+          <Dt></Dt>
+          <Dd>n回表の確率</Dd>
+          <Dd></Dd>
+          {probabilities.map((p) => {
+            return (
+              <Fragment key={p.count}>
+                <Dt>{p.count}回 </Dt>
+                <Dd className={percentColorClasses(p.probability)}>
+                  {p.probability}
+                </Dd>
+                <Dd>%</Dd>
+              </Fragment>
+            );
+          })}
+        </DlCol>
+        <DlCol $columns={3}>
+          <Dt></Dt>
+          <Dd>n回以上表の確率</Dd>
+          <Dd></Dd>
+          {tossCount > 1 &&
+            probabilitiesGreater.map((p) => {
               return (
                 <Fragment key={p.count}>
-                  <Dt>{p.count}回 </Dt>
+                  <Dt>
+                    {p.count}回{greaterDtText(p.count)}
+                  </Dt>
                   <Dd className={percentColorClasses(p.probability)}>
                     {p.probability}
                   </Dd>
@@ -92,59 +157,38 @@ export const CoinToss = () => {
                 </Fragment>
               );
             })}
-          </DlCol>
-          <DlCol $columns={3}>
-            <Dt></Dt>
-            <Dd>n回以上表の確率</Dd>
-            <Dd></Dd>
-            {tossCount > 1 &&
-              probabilitiesGreater.map((p) => {
-                return (
-                  <Fragment key={p.count}>
-                    <Dt>
-                      {p.count}回{greaterDtText(p.count)}
-                    </Dt>
-                    <Dd className={percentColorClasses(p.probability)}>
-                      {p.probability}
-                    </Dd>
-                    <Dd>%</Dd>
-                  </Fragment>
-                );
-              })}
-          </DlCol>
-          <DlCol $columns={3}>
-            <Dt></Dt>
-            <Dd>{tossCount}回連続表の確率</Dd>
-            <Dd></Dd>
-            <Dt></Dt>
-            <Dd
-              className={percentColorClasses(
-                probabilitiesConsecutive.probability,
-              )}
-            >
-              {probabilitiesConsecutive.probability}
-            </Dd>
-            <Dd>%</Dd>
-            <Dt></Dt>
-            <Dd>( 1 / {patternCount} )</Dd>
-            <Dd> </Dd>
-          </DlCol>
-        </div>
-        <div>全てのパターンリスト</div>
-        {allPatternsTable(patternCount, tossCount)}
-
-        <div>
-          {tossCount} bit は {patternCount.toLocaleString()}通り
-        </div>
-      </Section2>
-    </Section1>
+        </DlCol>
+        <DlCol $columns={3}>
+          <Dt></Dt>
+          <Dd>{tossCount}回連続表の確率</Dd>
+          <Dd></Dd>
+          <Dt></Dt>
+          <Dd
+            className={percentColorClasses(
+              probabilitiesConsecutive.probability,
+            )}
+          >
+            {probabilitiesConsecutive.probability}
+          </Dd>
+          <Dd>%</Dd>
+          <Dt></Dt>
+          <Dd>( 1 / {patternCount} )</Dd>
+          <Dd> </Dd>
+        </DlCol>
+      </div>
+    </>
   );
 };
 
-const allPatternsTable = (patternCount: number, tossCount: number) => {
+const allPatternsTable = ({
+  patternCount,
+  tossCount,
+}: Pick<UseCoinTossType, 'patternCount' | 'tossCount'>) => {
   if (patternCount > 300) {
     return (
-      <div className="text-warning">パターン数が多すぎるため表示できません</div>
+      <div className="text-warning">
+        パターン数が多すぎるため表は表示されません
+      </div>
     );
   }
   return (
@@ -180,5 +224,57 @@ const allPatternsTable = (patternCount: number, tossCount: number) => {
         </TBody>
       </Table>
     </TableWrapper>
+  );
+};
+
+const displayBitUnits = ({
+  tossCount,
+  isBinaryUnit,
+  setIsBinaryUnit,
+}: Pick<UseCoinTossType, 'tossCount' | 'isBinaryUnit' | 'setIsBinaryUnit'>) => {
+  if (tossCount === 0) {
+    return null;
+  }
+  return (
+    <>
+      <Section3>
+        <Label>
+          <Radio
+            name="isBinaryUnit"
+            checked={!isBinaryUnit}
+            onChange={() => setIsBinaryUnit(false)}
+          />
+          <LabelSpan>1000</LabelSpan>
+        </Label>
+        <Label>
+          <Radio
+            name="isBinaryUnit"
+            checked={isBinaryUnit}
+            onChange={() => setIsBinaryUnit(true)}
+          />
+          <LabelSpan>1024</LabelSpan>
+        </Label>
+      </Section3>
+      <Section3 vertical>
+        <div>
+          {tossCount} bit は {tossCount / 8} byte
+        </div>
+        {isBinaryUnit ? (
+          <div> = {tossCount / 8 / 1024} KiB </div>
+        ) : (
+          <div> = {tossCount / 8 / 1000} KB </div>
+        )}
+        {isBinaryUnit ? (
+          <div> = {tossCount / 8 / 1024 / 1024} MiB </div>
+        ) : (
+          <div> = {tossCount / 8 / 1000 / 1000} MB </div>
+        )}
+        {isBinaryUnit ? (
+          <div> = {tossCount / 8 / 1024 / 1024 / 1024} GiB </div>
+        ) : (
+          <div> = {tossCount / 8 / 1000 / 1000 / 1000} GB </div>
+        )}
+      </Section3>
+    </>
   );
 };

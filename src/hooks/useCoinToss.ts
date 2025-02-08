@@ -9,8 +9,12 @@ export const useCoinToss = () => {
   const [decimalPlaces, setDecimalPlaces] = useState(3);
   /**コイントス回数の選択肢 */
   const tossCountSelection = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 16, 32, 64, 128, 256, 512, 1024,
   ];
+
+  /** KiB, MiB, GiBで表示するかどうか */
+  const [isBinaryUnit, setIsBinaryUnit] = useState(false);
+
   const percentColorClasses = (percent: number) => {
     if (percent >= 90) return 'text-blue-500';
     if (percent >= 75) return 'text-cyan-500';
@@ -67,6 +71,12 @@ export const useCoinToss = () => {
   }, [tossCount, toPercent]);
   /** パターン数 */
   const patternCount = 2 ** tossCount;
+  /** ステップの色 */
+  const stepVariant = (count: number) =>
+    count === tossCount ? 'step-primary' : '';
+  /** 何回以上の文字 */
+  const greaterDtText = (count: number) =>
+    count === 0 || count === tossCount ? '' : '以上';
 
   return {
     probabilities,
@@ -79,5 +89,11 @@ export const useCoinToss = () => {
     patternCount,
     decimalPlaces,
     setDecimalPlaces,
+    isBinaryUnit,
+    setIsBinaryUnit,
+    stepVariant,
+    greaterDtText,
   };
 };
+
+export type UseCoinTossType = ReturnType<typeof useCoinToss>;
