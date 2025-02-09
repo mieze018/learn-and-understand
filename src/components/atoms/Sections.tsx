@@ -13,5 +13,6 @@ export const Section2 = styled.section.attrs({
 export const Section3 = styled.section.attrs<{ vertical?: boolean }>(
   (props) => ({
     className: `flex gap-4 w-full items-center flex-wrap justify-center ${props.vertical ? 'flex-col' : 'flex-row'}`,
+    vertical: undefined,
   }),
 )``;

@@ -122,7 +122,7 @@ const coinTossTable = ({
   return (
     <>
       <div>パターン数: {patternCount.toLocaleString()}</div>
-      <div className="flex flex-row w-full overflow-auto gap-x-12 justify-center">
+      <div className="flex flex-row justify-center w-full overflow-auto gap-x-12">
         <DlCol $columns={3}>
           <Dt></Dt>
           <Dd>n回表の確率</Dd>
@@ -255,7 +255,7 @@ const displayBitUnits = ({
           <LabelSpan>1024</LabelSpan>
         </Label>
       </Section3>
-      <Section3 vertical>
+      <Section3 vertical={true}>
         <div>
           {tossCount} bit は {tossCount / 8} byte
         </div>
